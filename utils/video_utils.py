@@ -52,7 +52,8 @@ def read_video(input: Union[str, bytes], verbose: bool=True) -> Tuple[List[np.nd
 def save_video(frames: List[np.ndarray], path: str, fps: int=24, verbose: bool=True) -> None:
     start_time = time.time()
 
-    fourcc = cv2.VideoWriter_fourcc(*"avc1")    # codec for compressing the video
+    # fourcc = cv2.VideoWriter_fourcc(*"avc1")    # codec for compressing the video
+    fourcc = cv2.VideoWriter_fourcc(*"mp4v")    # codec for compressing the video ## REF https://stackoverflow.com/questions/30509573/writing-an-mp4-video-using-python-opencv
     out = cv2.VideoWriter(filename=path, fourcc=fourcc, fps=fps, frameSize=(frames[0].shape[1], frames[0].shape[0]))
     
     for frame in frames:

@@ -7,6 +7,8 @@ from trackers import Tracker
 from team_assignment import TeamAssigner
 from player_ball_assignment import PlayerBallAssigner
 from camera_movement import CameraMovementEstimator
+from export.export_to_csv import export_data 
+
 
 def process_video(data: Union[str, bytes], classes: List[int], verbose: bool=True) -> None:
     frames, fps, _, _ = read_video(data, verbose)
@@ -27,13 +29,15 @@ def process_video(data: Union[str, bytes], classes: List[int], verbose: bool=Tru
     player_assigner = PlayerBallAssigner()
     player_assigner.get_player_and_possession(tracks)
 
+    export_data(tracks, file='output/data22.csv')
+
     output = tracker.draw_annotations(frames, tracks, player_assigner.ball_possession)
     output = camera_movement_estimator.draw_camera_movement(output, camera_movement_per_frame)
 
-    save_video(output, "output/output.mp4", fps, verbose)
+    save_video(output, "output/output.mp4v", fps, verbose)
 
 def _video(path: str) -> None:
-    if not path.lower().endswith(".mp4"):
+    if not path.lower().endswith(".mp4v"):
         raise argparse.ArgumentTypeError(f"File '{path}' is not an MP4 file.")
     
     if not os.path.isfile(path):
@@ -68,3 +72,7 @@ if __name__ == "__main__":
         classes = _classes(args.tracks)
         
         process_video(args.video, classes, args.verbose)
+
+
+# REF in video_utils
+        # https://stackoverflow.com/questions/30509573/writing-an-mp4-video-using-python-opencv
