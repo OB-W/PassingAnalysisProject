@@ -1,0 +1,10 @@
+Take a look at player_ball_assinger and team_assignment
+
+Use that to base the code off to add an icon for each pass or text 
+
+get it simple at first, then if you have time make it better and improve it
+
+get report done and presenation done before
+
+
+

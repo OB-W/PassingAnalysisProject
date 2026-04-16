@@ -8,6 +8,8 @@ from main import process_video
 st.set_page_config(page_title="Football Analysis")
 
 # menu
+st.sidebar.title("Middlegame Analytics") 
+
 st.sidebar.title("Settings")
 
 st.sidebar.header("Options")
@@ -58,6 +60,7 @@ if demo:
 
     start_analysis = st.sidebar.button("Start Analysis", key="demo")
 
+
     if start_analysis:
         with st.spinner("Processing ..."):
             process_video(demo_video_bytes, classes)
@@ -71,6 +74,7 @@ if demo:
 st.sidebar.write("\n")
 
 st.sidebar.subheader("Video Upload")
+st.sidebar.subheader('Please Upload ONLY Match footage')
 
 uploaded_video = st.sidebar.file_uploader("Select a video file.", type=["mp4"])
 
@@ -90,7 +94,7 @@ if uploaded_video:
         placeholder.empty()
 
 # main page
-st.title("MatchVision - Automated Analysis")
+st.title("PassingVision - Automated Analysis")
 st.subheader("Computer Vision, Deep Learning & Unsupervised Machine Learning")
 
 tab1, tab2, tab3, tab4 = st.tabs(["Usage", "Results", "Logs", "Analysis"])
@@ -98,6 +102,9 @@ tab1, tab2, tab3, tab4 = st.tabs(["Usage", "Results", "Logs", "Analysis"])
 with tab1:
     st.write("To use the automated analysis, follow these steps:")
     st.markdown("""
+
+    Your video should only contain match footage, without replays or close up of players. For example, please see the demos.            
+
     1. Select the desired output options.
     2. Upload a video or select a demo video. 
     3. Click on **Start Analysis**.

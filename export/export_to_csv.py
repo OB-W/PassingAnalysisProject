@@ -34,10 +34,5 @@ def export_data(tracks, file='output/data2.csv'): # saving to csv file, track ha
     print("saved file") #check this only temo
 
 
-def dump(tracks):
-    for obj_type, frames in tracks.items():
-        print(f"\n{obj_type}")
-        for track_id, info in frames[0].items():
-            print(f"  {track_id}: {info}")
 
                 
