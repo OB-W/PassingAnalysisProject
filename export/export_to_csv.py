@@ -2,7 +2,7 @@
 import pandas as pd
 from utils import get_center_of_bbox
 
-def export_data(tracks, file='output/data2.csv'): # saving to csv file, track has player and ball tracks
+def export_data(tracks, file='output/data.csv'): # saving to csv file, track has player and ball tracks
     rows = []
 
     for frame_num, players in enumerate(tracks["players"]): # goes through each frame and tracks

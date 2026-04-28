@@ -65,12 +65,21 @@ class CameraMovementEstimator():
         old_gray = cv2.cvtColor(frames[0], cv2.COLOR_BGR2GRAY)  # convert image to gray
         old_features = cv2.goodFeaturesToTrack(old_gray, **self.features)   # ** to expand dictionary into the parameters
 
-        for frame_num in range(1, len(frames)):
+        for frame_num in range(1, len(frames)): 
+            
             frame_gray = cv2.cvtColor(frames[frame_num], cv2.COLOR_BGR2GRAY)
+            if old_features is None or len(old_features) == 0:
+                old_gray = cv2.cvtColor(frames[0], cv2.COLOR_BGR2GRAY)  # convert image to gray
+                old_features = cv2.goodFeaturesToTrack(old_gray, **self.features)   # ** to expand dictionary into the parameters
+              #  new_features, _, _ = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, old_features, None, **self.lk_params)
+                max_distance = 0
+                camera_movement_x, camera_movement_y = 0, 0
+                continue
+            else:
+                new_features, _, _ = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, old_features, None, **self.lk_params)
+                max_distance = 0
+                camera_movement_x, camera_movement_y = 0, 0
             new_features, _, _ = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, old_features, None, **self.lk_params)
-
-            max_distance = 0
-            camera_movement_x, camera_movement_y = 0, 0
 
             for i, (new, old) in enumerate(zip(new_features, old_features)):
                 new_features_point = new.ravel()

@@ -29,15 +29,15 @@ def process_video(data: Union[str, bytes], classes: List[int], verbose: bool=Tru
     player_assigner = PlayerBallAssigner()
     player_assigner.get_player_and_possession(tracks)
 
-    export_data(tracks, file='output/data22.csv')
+    export_data(tracks, file='output/data.csv')
 
     output = tracker.draw_annotations(frames, tracks, player_assigner.ball_possession)
     output = camera_movement_estimator.draw_camera_movement(output, camera_movement_per_frame)
 
-    save_video(output, "output/output.mp4v", fps, verbose)
+    save_video(output, "output/output.mp4", fps, verbose)
 
 def _video(path: str) -> None:
-    if not path.lower().endswith(".mp4v"):
+    if not path.lower().endswith(".mp4"):
         raise argparse.ArgumentTypeError(f"File '{path}' is not an MP4 file.")
     
     if not os.path.isfile(path):
