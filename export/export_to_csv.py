@@ -1,11 +1,10 @@
-# need to do a data dum and interpret all the data
 import pandas as pd
 from utils import get_center_of_bbox
 
 def export_data(tracks, file='output/data.csv'): # saving to csv file, track has player and ball tracks
     rows = []
 
-    for frame_num, players in enumerate(tracks["players"]): # goes through each frame and tracks
+    for frame_num, players in enumerate(tracks["players"]): # goes through each frame and players in tracks["players"]
         ball = tracks["ball"][frame_num]
 
         if 1 in ball:
@@ -18,7 +17,7 @@ def export_data(tracks, file='output/data.csv'): # saving to csv file, track has
             team = player.get("team", None) # won't crash if not their
             has_ball = player.get("has_ball", False)
 
-            rows.append({
+            rows.append({   ## addind row for each player in frame with the, player id, team, player position, ball position, has_ball
                 "frame":frame_num,
                 "player_id": player_id,
                 "team": team,
@@ -29,9 +28,9 @@ def export_data(tracks, file='output/data.csv'): # saving to csv file, track has
                 "has_ball":has_ball
             })
 
-    dataframe = pd.DataFrame(rows)
-    dataframe.to_csv(file, index=False)
-    print("saved file") #check this only temo
+    dataframe = pd.DataFrame(rows) 
+    dataframe.to_csv(file, index=False) ## saving data to csv
+   # print("saved file") #check this only temp
 
 
 

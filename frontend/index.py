@@ -119,7 +119,7 @@ with tab2:
     #if processed:
         #with open("ouput/output.mp4", 'rb') as f:
         #        st.video(f.read())  ## need to be change on a live system
-## might change back to default if I just install ffmpeg
+## Change back to default if I just install ffmpeg - didn't have permission to
 
 with tab3:
     log_files_list = ["logs/tracking.log", "logs/camera_movement.log", "logs/memory_access.log"]
@@ -133,5 +133,5 @@ with tab3:
     except FileNotFoundError:
         st.error(f"Log file '{selected_log_file}' not found.")
 
-with tab4: 
+with tab4: ## Create to show analysis insight and data
     st.write("Analysis Pending...")

@@ -68,7 +68,7 @@ class CameraMovementEstimator():
         for frame_num in range(1, len(frames)): 
             
             frame_gray = cv2.cvtColor(frames[frame_num], cv2.COLOR_BGR2GRAY)
-            if old_features is None or len(old_features) == 0:
+            if old_features is None or len(old_features) == 0:  ## fix bug: if no feature are detect but has slow donw the processing signifcantly
                 old_gray = cv2.cvtColor(frames[0], cv2.COLOR_BGR2GRAY)  # convert image to gray
                 old_features = cv2.goodFeaturesToTrack(old_gray, **self.features)   # ** to expand dictionary into the parameters
               #  new_features, _, _ = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, old_features, None, **self.lk_params)

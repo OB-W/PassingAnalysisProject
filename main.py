@@ -36,6 +36,7 @@ def process_video(data: Union[str, bytes], classes: List[int], verbose: bool=Tru
 
     save_video(output, "output/output.mp4", fps, verbose)
 
+
 def _video(path: str) -> None:
     if not path.lower().endswith(".mp4"):
         raise argparse.ArgumentTypeError(f"File '{path}' is not an MP4 file.")
