@@ -16,16 +16,15 @@ import pandas as pd
 video_file  =  "/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/output.mp4"
 output_video = "/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/graded_output.mp4"
 hold_frame  = 45  # how long each badge stays on screen # this is
-passes_csv = "/home/c3646202/Desktop/FootballPassingAnalysisProject2/pass_data_processing/passes.csv"
+passes_csv = "/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/passes.csv"
 
 
-grades = {
-    0.1: ("Blunder ??", (0,   0, 210)),
-    0.3: ("Mistake ?", (0, 100, 255)),
-    0.5: ("Inaccuracy ?!", (0, 200, 255)),
-    0.7: ("Good !", (50, 205,  50)),
-    0.9: ("Best !!", (255, 215,  0)),
-}
+grades = { 0: ("Blunder ??",(0,   0, 210)),
+    1: ("Mistake ?",(0, 100,255)),
+    2: ("Textbook", (0,200, 255)),
+    3: ("Good !", (50, 205, 50)),
+    4: ("Great !!",(255, 215, 0)),
+} 
 
 def csv_import():
     passes_df = pd.read_csv(passes_csv).set_index("frame_id")
@@ -37,9 +36,19 @@ def draw_grade(frame, pass_grade):  # https://www.geeksforgeeks.org/python/pytho
     label, color = grades.get(pass_grade)
     font = cv2.FONT_HERSHEY_SIMPLEX
     (frame_width, frame_height), _ = cv2.getTextSize(label, font, 0.55, 2)
-    cv2.rectangle(frame, (20, frame_height-60), (20 + frame_width + 10, frame_height - 20), (0, 0, 0), 3)  ### https://www.geeksforgeeks.org/python/python-opencv-cv2-rectangle-method/
-    cv2.putText(frame, label, (25, h - 30), font, 0.55, (255,255,255), 2, cv2.LINE_AA)
-def main(grades, video_file, output_video, passes_csv):
+    ## Refrance 1 - code was inspired by annotiation_utils - 77-82 and 93
+    overlay = frame.copy()
+    cv2.rectangle(overlay, pt1=(100, 850), pt2=(850, 970), color=(255, 255, 255), thickness=cv2.FILLED)
+    alpha = 0.4
+    cv2.addWeighted(src1=overlay, alpha=alpha, src2=frame, beta=1-alpha, gamma=0, dst=frame)
+    
+    cv2.putText(frame, text=f"Pass Grade: {label}", org=(150, 950), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(0, 0, 0), thickness=3)
+
+    #cv2.rectangle(frame, (20, frame_height-60), (20 + frame_width + 10, frame_height - 20), (0, 0, 0), 3)  ### https://www.geeksforgeeks.org/python/python-opencv-cv2-rectangle-method/
+    #cv2.putText(frame, label, (25, frame_height - 30), font, 0.55, (255,255,255), 2, cv2.LINE_AA) ## Inspired by utils/video
+
+
+def data_to_video_main(grades, video_file, output_video, passes_csv):
 	## ref https://www.geeksforgeeks.org/python/saving-a-video-using-opencv/
     #passes_df = csv_import()
     passes_df = pd.read_csv(passes_csv)
@@ -73,6 +82,10 @@ def main(grades, video_file, output_video, passes_csv):
     out.release()
     print("Done", output_video)
 
-main(grades, video_file, output_video, passes_csv)
+data_to_video_main(grades, video_file, output_video, passes_csv)  ## don't forget to take this out 
+
+## Extra - if time at the end get colour for the text to work 
+
+
 	
 	

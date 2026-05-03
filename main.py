@@ -7,8 +7,12 @@ from trackers import Tracker
 from team_assignment import TeamAssigner
 from player_ball_assignment import PlayerBallAssigner
 from camera_movement import CameraMovementEstimator
+
 from export.export_to_csv import export_data 
 
+
+from pass_analysis.pass_analysis import passing_analysis
+from pass_analysis.pass_analysis import pass_results
 
 def process_video(data: Union[str, bytes], classes: List[int], verbose: bool=True) -> None:
     frames, fps, _, _ = read_video(data, verbose)
@@ -30,11 +34,16 @@ def process_video(data: Union[str, bytes], classes: List[int], verbose: bool=Tru
     player_assigner.get_player_and_possession(tracks)
 
     export_data(tracks, file='output/data.csv')
+    passing_analysis()
+
 
     output = tracker.draw_annotations(frames, tracks, player_assigner.ball_possession)
     output = camera_movement_estimator.draw_camera_movement(output, camera_movement_per_frame)
 
+
     save_video(output, "output/output.mp4", fps, verbose)
+    ##passing_results()??
+
 
 
 def _video(path: str) -> None:

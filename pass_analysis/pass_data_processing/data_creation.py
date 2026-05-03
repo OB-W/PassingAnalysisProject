@@ -3,26 +3,22 @@ import os
 import numpy
 import math
 
-path = '/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/data.csv' # csv
+data_path = '/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/data.csv' # csv
 # path = 'output/data.csv'
 
 #https://pandas.pydata.org/docs/index.html
 
+
+passes_path = '/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/passes.csv'
+
+
 def csv_import():
-    data = pd.read_csv(path)
-    print(data.head())
-    return data
-
-def import_ML_Data(data, passes_dataframe): ## run this just before you create passes.csv
-    for i in range(len(data)):
-        passes_dataframe['pass_grade'] = data{i}
-    return passes_dataframe
+        dataframe = pd.read_csv(data_path)
+    # print(data.head())
+        return dataframe
 
 
-
-
-
-def detect_passes(dataframe): #check
+def detect_passes(dataframe):
     passes = []
     last_holder = None
    # pass_grade = None 
@@ -57,18 +53,30 @@ def detect_passes(dataframe): #check
                 start_frame = frame
             # this need to be cleaned - below or recfaotro and the main as well
     passes_dataframe = pd.DataFrame(passes) ## ?
-## duration
-    passes_dataframe = import_ML_Data(data, passes_dataframe)
-    passes_dataframe.to_csv('passes.csv', index=False)
-    print('detect_passes finsihed')
+   # passes_dataframe = import_ML_Data(data, passes_dataframe)
+    save_passes(passes_dataframe)
     return passes_dataframe
 
+def save_passes(passes_dataframe):
+    passes_dataframe.to_csv(passes_path, index=False)
 
 
+def distance_to_ball(dataframe):
+    dataframe['distance_to_ball'] = numpy.sqrt((dataframe['player_x'] - dataframe['ball_x'])**2 + (dataframe['player_y'] - dataframe['ball_y'])**2)
+    return dataframe
+
+    
+def data_creation_main(dataframe):
+    passes = detect_passes(dataframe)
+    dataframe = distance_to_ball(dataframe)
+  # print(dataframe.shape)
+    #output_cv(dataframe)
+    dataframe.to_csv('/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/data.csv', index=False) ## all other data so just data.csv or dataMain.c
 
 def main():
     dataframe = csv_import()
     passes = detect_passes(dataframe)
+
 
 main()
 
