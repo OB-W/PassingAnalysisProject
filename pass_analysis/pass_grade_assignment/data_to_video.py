@@ -13,8 +13,7 @@ import cv2
 import pandas as pd
 
 
-video_file  =  "/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/output.mp4"
-output_video = "/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/graded_output.mp4"
+
 hold_frame  = 45  # how long each badge stays on screen # this is
 passes_csv = "/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/passes.csv"
 
@@ -48,11 +47,14 @@ def draw_grade(frame, pass_grade):  # https://www.geeksforgeeks.org/python/pytho
     #cv2.putText(frame, label, (25, frame_height - 30), font, 0.55, (255,255,255), 2, cv2.LINE_AA) ## Inspired by utils/video
 
 
-def data_to_video_main(grades, video_file, output_video, passes_csv):
+def data_to_video_main(passes_csv):
 	## ref https://www.geeksforgeeks.org/python/saving-a-video-using-opencv/
     #passes_df = csv_import()
     passes_df = pd.read_csv(passes_csv)
     ##set_index("frame_id")
+
+    video_file  =  "/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/output.mp4"
+    output_video = "/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/graded_output.mp4"
     
 	
     cap  = cv2.VideoCapture(video_file) # Loading video
@@ -82,7 +84,7 @@ def data_to_video_main(grades, video_file, output_video, passes_csv):
     out.release()
     print("Done", output_video)
 
-data_to_video_main(grades, video_file, output_video, passes_csv)  ## don't forget to take this out 
+#data_to_video_main(grades, video_file, output_video, passes_csv, pass_grade)  ## don't forget to take this out 
 
 ## Extra - if time at the end get colour for the text to work 
 

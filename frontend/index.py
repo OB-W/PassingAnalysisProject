@@ -5,6 +5,9 @@ import sys
 sys.path.append(os.path.abspath("."))
 from main import process_video
 
+import pandas as pd
+from numpy.random import default_rng as rng
+
 st.set_page_config(page_title="Football Analysis")
 
 # menu
@@ -97,7 +100,7 @@ if uploaded_video:
 st.title("PassingVision - Automated Analysis")
 st.subheader("Computer Vision, Deep Learning & Unsupervised Machine Learning")
 
-tab1, tab2, tab3, tab4 = st.tabs(["Usage", "Results", "Logs", "Analysis"])
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Usage", "Results", "Logs", " Line Graph Analysis", "Area Graph Analysis", "Line Graph Analysis 2"])
 
 with tab1:
     st.write("To use the automated analysis, follow these steps:")
@@ -115,7 +118,10 @@ with tab1:
 
 with tab2:
     if processed:
-        st.video("output/output.mp4v")
+        #open_video = open("output/output.mp4v")
+        #read_video = open_video.read()
+        st.video("output/output.mp4")
+        #st.video(read_video)
     #if processed:
         #with open("ouput/output.mp4", 'rb') as f:
         #        st.video(f.read())  ## need to be change on a live system
@@ -133,5 +139,22 @@ with tab3:
     except FileNotFoundError:
         st.error(f"Log file '{selected_log_file}' not found.")
 
-with tab4: ## Create to show analysis insight and data
-    st.write("Analysis Pending...")
+with tab4: ## Graoh that show data metrics
+    st.write('Line Grah Data: Start Frame of Passes & Grades of Passes')
+    pdf = pd.read_csv('/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/passes.csv')
+    df_line = pd.DataFrame(rng(0).standard_normal((14, 2)), columns=["start_frame", "pass_grade"]) # Refrance - https://docs.streamlit.io/develop/api-reference/charts/st.line_chart
+    st.line_chart(df_line)
+
+with tab5: ## Graoh that show data metrics
+    st.write('Area Graoh Data: has_ball & Team')
+    pdf = pd.read_csv('/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/passes.csv')
+    df_area = pd.DataFrame(rng(0).standard_normal((20, 2)), columns=["has_ball", "team"])
+    ### maybe be see if you can map the stand nom to values
+    st.area_chart(df_area)
+
+with tab6: ## Graoh that show data metrics
+    st.write('Line Graph Data: Start Frame of Passes & Grades of Passes')
+    pdf = pd.read_csv('/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/passes.csv')
+    df_line = pd.DataFrame(rng(0).standard_normal((20, 2)), columns=["start_id", "end_id"])
+    st.line_chart(df_line)
+

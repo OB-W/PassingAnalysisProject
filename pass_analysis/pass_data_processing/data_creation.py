@@ -3,16 +3,16 @@ import os
 import numpy
 import math
 
-data_path = '/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/data.csv' # csv
+data_path = 'output/data.csv' # csv
 # path = 'output/data.csv'
 
 #https://pandas.pydata.org/docs/index.html
 
 
-passes_path = '/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/passes.csv'
+passes_path = 'output/passes.csv'
 
 
-def csv_import():
+def csv_import(data_path):
         dataframe = pd.read_csv(data_path)
     # print(data.head())
         return dataframe
@@ -67,14 +67,15 @@ def distance_to_ball(dataframe):
 
     
 def data_creation_main(dataframe):
-    passes = detect_passes(dataframe)
+    passes_dataframe = detect_passes(dataframe)
     dataframe = distance_to_ball(dataframe)
   # print(dataframe.shape)
     #output_cv(dataframe)
-    dataframe.to_csv('/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/data.csv', index=False) ## all other data so just data.csv or dataMain.c
+    dataframe.to_csv('output/data.csv', index=False) ## all other data so just data.csv or dataMain.c
+    return passes_dataframe
 
 def main():
-    dataframe = csv_import()
+    dataframe = csv_import(data_path)
     passes = detect_passes(dataframe)
 
 

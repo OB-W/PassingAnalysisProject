@@ -23,7 +23,7 @@ from torch_geometric.loader import DataLoader
 #             Config
 #----------------------------------
 
-in_channels = 6# OR IS THIS 7??  # check this +++ can we get this to 16, will it be faster??
+in_channels = 6
 hidden_channels  = 64   # hiddel and out_channels
 Dropout= 0.2 # start at 0.2 then go up if needed
 per_head = hidden_channels // 2
@@ -38,7 +38,7 @@ export_data_model_path_new = '/home/c3646202/Desktop/FootballPassingAnalysisProj
 def export_data(model):
     torch.save(model.state_dict(), export_data_model_path_new) ### Refrance https://docs.pytorch.org/tutorials/beginner/saving_loading_models.html
     #grades.to_csv('ML_Results.csv', index=False)
-
+"""""
 ##  Train
 def train(data, model, device):
     model.train()
@@ -111,7 +111,7 @@ def main():
     model.to(device)  ## sending the model to th GPU or CPU
     times, accs, loss = training(loader, model, device, epoch=100) 
     display_ouput(times, accs, 100, loss, model)
-
+"""""
 #main()
 
 

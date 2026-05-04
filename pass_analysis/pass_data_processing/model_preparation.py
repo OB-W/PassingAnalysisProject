@@ -54,34 +54,33 @@ def graph_construction():
     # https://www.geeksforgeeks.org/python/how-to-fix-valueerror-the-truth-value-of-a-series-is-ambiguous-in-pandas/
         
         frame = data_dataframe[(data_dataframe['frame'] >= start_frame) & (data_dataframe['frame'] <= end_frame)]  ## validating if start and end frame are not before or after each other
-
         if frame.empty:
+            print('Warning - No frame data')
             continue
+
+   
         ##frame =
         node_features = frame[['player_x', 'player_y', 'team', 'has_ball', 'ball_x', 'ball_y']]  ## Node Deature for that create the node
     #edge_features = data_dataframe[['player_x', 'player_y']] ## add vy and vx as well 
         edge_features = frame[['distance_to_ball', 'has_ball', 'team']]
         team = frame['team'].values
+        
         frame_length = len(frame)
         for i in range(frame_length):   ### this is gonna be spenny,  sliding window # get refrance
             for j in range(frame_length):
                 if i != j: ## connects all player - for just teammates- if i != j and team[i] == team[j]:  ## this is only ball holder to temmates, need teammate, might need to change if I want cross team interaction can test
                     row.append(i)
                     column.append(j) 
+
+
         #   Data Formatting for Graph Attention Network 
         node_features = node_features.values.astype('float32') ## need to convert float32 to pytorch
         edge_features = edge_features.values[column].astype('float32') 
         edge_index = torch.tensor([row, column], dtype=torch.long)
-        x = torch.tensor(node_features) #, dtype=torch.float
-        #y_grade = torch.tensor(y_grade.to_numpy(), dtype=torch.long)# # dtype=torch.long # .squeeze() https://stackoverflow.com/questions/70173120/numpy-get-1d-array-from-a-2d-array-with-1-row
-        if pd.isna(rows['pass_grade']): ## https://www.w3schools.com/python/pandas/ref_df_isna.asp
-            continue
-        percentage_to_grade = {0.1: 0, 0.3: 1, 0.5: 2, 0.7: 3, 0.9: 4} ## model only takes in whole numbers
-        grade_value = percentage_to_grade[rows['pass_grade']]
-        y_grade = torch.tensor([grade_value] , dtype=torch.long)# # dtype=torch.long # from 0-4 to 1-5# fhttps://stackoverflow.com/questions/70173120/numpy-get-1d-array-from-a-2d-array-with-1-row
+        x = torch.tensor(node_features)
         edge_attr = torch.tensor(edge_features)
         
-        data = Data(x=x, edge_index=edge_index, edge_attr=edge_attr, y_grade=y_grade,) #edge_attr=edge_attr
+        data = Data(x=x, edge_index=edge_index, edge_attr=edge_attr) #edge_attr=edge_attr
         pass_graph.append(data)
     return pass_graph
 
