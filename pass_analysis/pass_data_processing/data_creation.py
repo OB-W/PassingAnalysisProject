@@ -18,7 +18,7 @@ def csv_import(data_path):
         return dataframe
 
 
-def detect_passes(dataframe):
+def detect_passes(dataframe): 
     passes = []
     last_holder = None
    # pass_grade = None 
@@ -35,7 +35,7 @@ def detect_passes(dataframe):
             continue
         current_holders = holders['player_id'].values[0]
         
-        if last_holder is None:
+        if last_holder is None:  ## if no last holder, assign last holder 
             last_holder = current_holder
             start_frame = frame
             continue
@@ -77,7 +77,6 @@ def data_creation_main(dataframe):
 def main():
     dataframe = csv_import(data_path)
     passes = detect_passes(dataframe)
-
 
 main()
 

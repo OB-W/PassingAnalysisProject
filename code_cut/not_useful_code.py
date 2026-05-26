@@ -30,7 +30,7 @@ def distance_to_player(dataframe):
     return dataframe
 
 
-    def player_velocity(dataframe): # https://www.geeksforgeeks.org/python/python-program-to-calculate-acceleration-final-velocity-initial-velocity-and-time/
+def player_velocity(dataframe): # https://www.geeksforgeeks.org/python/python-program-to-calculate-acceleration-final-velocity-initial-velocity-and-time/
     dataframe["player_vx"]=dataframe["player_x"].diff() * fps # calculate the difference * time calculate the difference
     dataframe["player_vy"]=dataframe["player_y"].diff() * fps
     #print(dataframe)

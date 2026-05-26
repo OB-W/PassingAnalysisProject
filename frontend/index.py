@@ -100,7 +100,7 @@ if uploaded_video:
 st.title("PassingVision - Automated Analysis")
 st.subheader("Computer Vision, Deep Learning & Unsupervised Machine Learning")
 
-tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Usage", "Results", "Logs", " Line Graph Analysis", "Area Graph Analysis", "Line Graph Analysis 2"])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["Usage", "Results", "Logs", " Line Graph Analysis", "Area Graph Analysis"])
 
 with tab1:
     st.write("To use the automated analysis, follow these steps:")
@@ -108,19 +108,25 @@ with tab1:
 
     Your video should only contain match footage, without replays or close up of players. For example, please see the demos.            
 
-    1. Select the desired output options.
-    2. Upload a video or select a demo video. 
-    3. Click on **Start Analysis**.
-    4. Go to the tab **Results** to see the output video.
+    1. Select the desired output options
+    2. Upload a video or select a demo video
+    3. Click on **Start Analysis**
+    4. Go to the tab **Results** to see the output video
                 
-    For best results, the video should not contain multiple camera perspectives.
+    For the best results, follow these video requirements:
+    1. No sudden camera movements
+    2. Minimum 720p quality
+    3. No Zoom in on players
+    4. No match replay
+    5. No overcrowding
+    6. Consistent 1/3 of the pitch always in view
     """)
 
 with tab2:
     if processed:
         #open_video = open("output/output.mp4v")
         #read_video = open_video.read()
-        st.video("output/output.mp4")
+        st.video("output/graded_output.mp4")
         #st.video(read_video)
     #if processed:
         #with open("ouput/output.mp4", 'rb') as f:
@@ -139,22 +145,14 @@ with tab3:
     except FileNotFoundError:
         st.error(f"Log file '{selected_log_file}' not found.")
 
-with tab4: ## Graoh that show data metrics
+with tab4: ## Graph that show data metrics - Refrance  - https://docs.streamlit.io/develop/api-reference/charts/
     st.write('Line Grah Data: Start Frame of Passes & Grades of Passes')
     pdf = pd.read_csv('/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/passes.csv')
-    df_line = pd.DataFrame(rng(0).standard_normal((14, 2)), columns=["start_frame", "pass_grade"]) # Refrance - https://docs.streamlit.io/develop/api-reference/charts/st.line_chart
-    st.line_chart(df_line)
+    #df_line = pd.DataFrame(rng(0).standard_normal((14, 2)), columns=["start_frame", "pass_grade"]) # Refrance - https://docs.streamlit.io/develop/api-reference/charts/st.line_chart
+    st.line_chart(pdf, x="start_frame", y="pass_grade")
 
 with tab5: ## Graoh that show data metrics
-    st.write('Area Graoh Data: has_ball & Team')
+    st.write('Number of Passes per Grade')
     pdf = pd.read_csv('/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/passes.csv')
-    df_area = pd.DataFrame(rng(0).standard_normal((20, 2)), columns=["has_ball", "team"])
-    ### maybe be see if you can map the stand nom to values
-    st.area_chart(df_area)
-
-with tab6: ## Graoh that show data metrics
-    st.write('Line Graph Data: Start Frame of Passes & Grades of Passes')
-    pdf = pd.read_csv('/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/passes.csv')
-    df_line = pd.DataFrame(rng(0).standard_normal((20, 2)), columns=["start_id", "end_id"])
-    st.line_chart(df_line)
-
+    df = pd.DataFrame(rng(0).standard_normal((20, 5)), columns=["0.1", "0.3", "0.5", "0.7", "0.9"])
+    st.bar_chart(df.iloc[0]) # Refrance - iloc[0] - https://docs.streamlit.io/develop/api-reference/data/st.dataframe

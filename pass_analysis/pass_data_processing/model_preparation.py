@@ -1,6 +1,5 @@
-# Refrance 1 Framework -  (GitHub, n.d.) - https://github.com/pyg-team/pytorch_geometric/blob/master/examples/gat.py
-
-#https://www.youtube.com/watch?v=Gv0RT5N_mhg
+# Template from ML_GAT_Model.ipynb - Take out y_grade as not needed
+# For comment please see ML_GAT_Model.ipynb
 
 import pandas as pd
 import numpy
@@ -9,19 +8,14 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-import os
-import math
-
 from torch_geometric.nn import GATv2Conv, global_mean_pool
 from torch_geometric.data import Data
 from torch_geometric.loader import DataLoader
 
 device = torch.device('cpu')
 
-## add tO export columns
 
-path_1 = '/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/data.csv' # Cheslea Vs Arsenal 10 Minutes
-#path_2 = '' # Demo1 - 30 seconds
+path_1 = '/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/data.csv'
 passes_csv_path = '/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/passes.csv' 
 
 def csv_import(path):
@@ -45,30 +39,27 @@ pass_graph = []
 
 ## Helped build the graph - https://www.datacamp.com/tutorial/comprehensive-introduction-graph-neural-networks-gnns-tutorial?dc_referrer=https%3A%2F%2Fwww.google.com%2F
 
-def graph_construction():
+def graph_construction():  ## One graph per pass 
     for index, rows in passes_dataframe.iterrows(): # creating the graph by going through each frame
         start_frame = rows['start_frame']
         end_frame = rows['end_frame']
         row = []
         column = []
-    # https://www.geeksforgeeks.org/python/how-to-fix-valueerror-the-truth-value-of-a-series-is-ambiguous-in-pandas/
         
         frame = data_dataframe[(data_dataframe['frame'] >= start_frame) & (data_dataframe['frame'] <= end_frame)]  ## validating if start and end frame are not before or after each other
         if frame.empty:
             print('Warning - No frame data')
             continue
 
-   
-        ##frame =
-        node_features = frame[['player_x', 'player_y', 'team', 'has_ball', 'ball_x', 'ball_y']]  ## Node Deature for that create the node
-    #edge_features = data_dataframe[['player_x', 'player_y']] ## add vy and vx as well 
+
+        node_features = frame[['player_x', 'player_y', 'team', 'has_ball', 'ball_x', 'ball_y']] 
         edge_features = frame[['distance_to_ball', 'has_ball', 'team']]
         team = frame['team'].values
         
         frame_length = len(frame)
         for i in range(frame_length):   ### this is gonna be spenny,  sliding window # get refrance
             for j in range(frame_length):
-                if i != j: ## connects all player - for just teammates- if i != j and team[i] == team[j]:  ## this is only ball holder to temmates, need teammate, might need to change if I want cross team interaction can test
+                if i != j: ## connects all player - for just teammates- if i != j and team[i] == team[j]:
                     row.append(i)
                     column.append(j) 
 
@@ -88,11 +79,3 @@ def graph_construction():
 def model_preparation_main():
     pass_graph = graph_construction()
     return pass_graph
-
-    
-        # size in each edge features that you pass into the model, -varible you pass into edge_attr 
-    #need to break this down edge_features is just an array of feature ve for each edge, and column represents the indices of the edges, then your edge_attr is correct
-    #https://www.kaggle.com/code/rafsunsheikh/convert-any-tabular-data-to-graph-for-gnn
-    
-    ### Creating One Object Per Pass to Calculate One Pass per Graph - https://pytorch-geometric.readthedocs.io/en/2.5.2/get_started/introduction.html#data-transforms
-

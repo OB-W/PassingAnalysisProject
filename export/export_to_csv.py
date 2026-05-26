@@ -11,7 +11,6 @@ def export_data(tracks, file='output/data.csv'): # saving to csv file, track has
             ball_x, ball_y = get_center_of_bbox(ball[1]["bbox"])
         else: # 
             ball_x, ball_y = False, False
-
         for player_id, player in players.items(): # goes through each player in the frame
             x, y = player["position"] #
             team = player.get("team", None) # won't crash if not their
@@ -27,7 +26,6 @@ def export_data(tracks, file='output/data.csv'): # saving to csv file, track has
                 "ball_y":ball_y,
                 "has_ball":has_ball
             })
-
     dataframe = pd.DataFrame(rows) 
     dataframe = pass_validation(dataframe)
     dataframe.to_csv(file, index=False) ## saving data to csv
@@ -38,26 +36,24 @@ def pass_validation(dataframe): ## maybe refractor could be gold plating ref
     hold_count = {}
     for frame, rows in dataframe.groupby('frame'):
         holder = None
-        for _, row in rows.iterrows():
+        for index, row in rows.iterrows(): # Refrance - Iterate rows - https://www.w3schools.com/python/pandas/ref_df_iterrows.asp  
             if row['has_ball'] == True:
-                holder = row['player_id']
-    
+                holder= row['player_id']
         if holder is None: 
-            dataframe.loc[dataframe['frame'] == frame, 'has_ball'] = False
+            dataframe.loc[dataframe['frame'] ==frame, 'has_ball']= False # Refrance -- loc - https://www.geeksforgeeks.org/python/python-pandas-dataframe-loc/
             continue
-        
-        hold_count = {holder: hold_count.get(holder, 0) + 1}
-    
+
+        hold = hold_count.get(holder, 0) + 1  ## get holder count add 1 for frame
+        hold_count = {holder: hold}
         if holder in hold_count:
             hold_count[holder] += 1
         else:
             hold_count[holder] = 1 
-    
-        if hold_count[holder] >= 25:
-            dataframe.loc[(dataframe['frame'] == frame) & (dataframe['player_id'] == holder), 'has_ball'] = True
-            dataframe.loc[(dataframe['frame'] == frame) & (dataframe['player_id'] != holder), 'has_ball'] = False
+        if hold_count[holder] >= 25: ## if the player has the ball for 25 frame or more
+            dataframe.loc[(dataframe['frame']==frame) & (dataframe['player_id'] == holder), 'has_ball']= True
+            dataframe.loc[(dataframe['frame']==frame) & (dataframe['player_id'] != holder), 'has_ball']= False
         else:
-            dataframe.loc[dataframe['frame'] == frame, 'has_ball'] = False  
+            dataframe.loc[dataframe['frame'] == frame, 'has_ball'] =False  
     dataframe['has_ball'] = dataframe['has_ball'].astype(bool)    
     return dataframe
 
