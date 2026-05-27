@@ -1,14 +1,4 @@
 
-# Videos
-*.mp4
-*.mp4v
-
-# Outputs
-output/
-
-# Optional demos
-demos/
-
 # Python
 .venv/
 __pycache__/
