@@ -7,6 +7,7 @@ from torch_geometric.loader import DataLoader
 from pass_analysis.pass_data_processing.data_processing import data_processing_main
 from .pass_grade_assignment.data_to_video import data_to_video_main
 from training.ML_GAT.PY_ML_GAT_Model import PassingGAT
+from utils .file_path_config.file_paths import video_file,passes_csv, output_video
 
 
 class PassAnalysis: # Main class for the pass_analysis, from csv importing, model, grade prediction 
@@ -19,9 +20,10 @@ class PassAnalysis: # Main class for the pass_analysis, from csv importing, mode
     
     def grade_to_passes_csv(passes_dataframe, predictions): # assign a pass grade to each row in pass_grdade
         pred_length = len(predictions) ## getting the length of predictions
-        for i in range(pred_length): 
-            print(predictions[i])  # testing the unfixed error # iloc cannot enlarge its target object
-            passes_dataframe.iloc[i, passes_dataframe.columns.get_loc('pass_grade')] = predictions[i].item() 
+        #for i in range(pred_length): 
+           # print(predictions[i])  # testing the unfixed error # iloc cannot enlarge its target object
+            #passes_dataframe.iloc[i, passes_dataframe.columns.get_loc('pass_grade')] = predictions[i].item() 
+        passes_dataframe['pass_grade'] = [p.item() for p in predictions]
 # Refrance iloc() - 
 # https://stackoverflow.com/questions/53806570/why-does-one-use-of-iloc-give-a-settingwithcopywarning-
 # but-the-other-doesnt
@@ -67,10 +69,6 @@ class PassAnalysis: # Main class for the pass_analysis, from csv importing, mode
 
 
     def pass_results(): ### pass result to video
-        video_file  =  "/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/output.mp4"
-        output_video = "/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/graded_output.mp4"
-        hold_frame  = 45  # how long each badge stays on screen
-        passes_csv = "/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/passes.csv"
         pass_grade = pd.read_csv(passes_csv)
         #data_to_graph_main()
         data_to_video_main(passes_csv)

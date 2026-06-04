@@ -11,12 +11,11 @@ import torch.nn.functional as F
 from torch_geometric.nn import GATv2Conv, global_mean_pool
 from torch_geometric.data import Data
 from torch_geometric.loader import DataLoader
+from utils.file_path_config.file_paths import data_csv, passes_csv
 
 device = torch.device('cpu')
 
 
-path_1 = '/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/data.csv'
-passes_csv_path = '/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/passes.csv' 
 
 def csv_import(path):
     dataframe = pd.read_csv(path)
@@ -27,8 +26,8 @@ def csv_import(path):
 #          Load Data In
 #-------------------------------
 
-passes_dataframe = pd.read_csv(passes_csv_path) # read data in
-data_dataframe = pd.read_csv(path_1) 
+passes_dataframe = pd.read_csv(passes_csv) # read data in
+data_dataframe = pd.read_csv(data_csv) 
 y_grade = passes_dataframe[['pass_grade']]
 pass_graph = []
 

@@ -4,6 +4,7 @@ import os
 import sys
 sys.path.append(os.path.abspath("."))
 from main import process_video
+from utils.file_path_config.file_paths import passes_csv
 
 import pandas as pd
 from numpy.random import default_rng as rng
@@ -147,12 +148,12 @@ with tab3:
 
 with tab4: ## Graph that show data metrics - Refrance  - https://docs.streamlit.io/develop/api-reference/charts/
     st.write('Line Grah Data: Start Frame of Passes & Grades of Passes')
-    pdf = pd.read_csv('/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/passes.csv')
+    pdf = pd.read_csv(passes_csv)
     #df_line = pd.DataFrame(rng(0).standard_normal((14, 2)), columns=["start_frame", "pass_grade"]) # Refrance - https://docs.streamlit.io/develop/api-reference/charts/st.line_chart
     st.line_chart(pdf, x="start_frame", y="pass_grade")
 
 with tab5: ## Graoh that show data metrics
     st.write('Number of Passes per Grade')
-    pdf = pd.read_csv('/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/passes.csv')
+    pdf = pd.read_csv(passes_csv)
     df = pd.DataFrame(rng(0).standard_normal((20, 5)), columns=["0.1", "0.3", "0.5", "0.7", "0.9"])
     st.bar_chart(df.iloc[0]) # Refrance - iloc[0] - https://docs.streamlit.io/develop/api-reference/data/st.dataframe

@@ -9,6 +9,7 @@ from player_ball_assignment import PlayerBallAssigner
 from camera_movement import CameraMovementEstimator
 
 from export.export_to_csv import export_data 
+from utils.file_path_config.file_paths import passes_csv
 
 
 from pass_analysis.pass_analysis import PassAnalysis

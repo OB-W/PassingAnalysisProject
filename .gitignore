@@ -3,6 +3,10 @@
 .venv/
 __pycache__/
 
+# Files
+*.csv
+*.mp4
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

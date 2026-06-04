@@ -9,9 +9,8 @@
 #put back into output.csv
 import cv2
 import pandas as pd
+from utils.file_path_config.file_paths import video_file,passes_csv, output_video
 
-
-passes_csv = "/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/passes.csv"
 
 # Pass BGR Colour Refrance - https://stackoverflow.com/questions/50495608/how-to-define-bgr-color-range-map-color-code-to-color-name 
 grades = { 0: ("Blunder ??",(0, 0, 210)),
@@ -46,8 +45,6 @@ def data_to_video_main(passes_csv):
     passes_df = pd.read_csv(passes_csv)
     ##set_index("frame_id")
 
-    video_file  =  "/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/output.mp4"
-    output_video = "/home/c3646202/Desktop/FootballPassingAnalysisProject2/output/graded_output.mp4"
     
 	
     cap  = cv2.VideoCapture(video_file) # Loading video
