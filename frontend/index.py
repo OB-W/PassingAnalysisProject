@@ -6,6 +6,8 @@ sys.path.append(os.path.abspath("."))
 from main import process_video
 from utils.file_path_config.file_paths import passes_csv
 
+from FootballPassingAnalysisProject2.database.database_main import save_to_database
+
 import pandas as pd
 from numpy.random import default_rng as rng
 
@@ -74,6 +76,12 @@ if demo:
             st.success("Video processing complete.")
             time.sleep(3)
         placeholder.empty()
+    
+    if processed:
+        if st.sidebar.button("Save Stats to Database"):
+            save_to_database()
+
+        
 
 st.sidebar.write("\n")
 
