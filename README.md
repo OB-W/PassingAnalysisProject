@@ -10,7 +10,9 @@
   <h3 align="center">MatchVision</h3>
 
   <p align="center">
-    Automated football match analysis using Computer Vision.
+    Automated football match Passing analysis using Computer Vision and Machine Learning. 
+    Still a work in progress documentation is not yet up to date.
+    To run, please follow usage and just used the frontend only and enter your ssh keys to the database database/database_main.py
     <br />
     <a href="https://github.com/janskn/football-computer-vision/issues"><strong>Explore the docs »</strong></a>
     <br />
