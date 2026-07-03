@@ -66,14 +66,9 @@ class PassAnalysis: # Main class for the pass_analysis, from csv importing, mode
             passes_dataframe = PassAnalysis.grade_to_passes_csv(passes_dataframe, predictions)
         return grade_predictions, passes_dataframe, grade_output
 
-
-
     def pass_results(): ### pass result to video
         pass_grade = pd.read_csv(passes_csv)
         #data_to_graph_main()
         data_to_video_main(passes_csv)
 
     
-
-
-

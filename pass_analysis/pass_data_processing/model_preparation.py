@@ -40,8 +40,8 @@ pass_graph = []
 
 def graph_construction():  ## One graph per pass 
     for index, rows in passes_dataframe.iterrows(): # creating the graph by going through each frame
-        start_frame = rows['start_frame']
-        end_frame = rows['end_frame']
+        start_frame = int(rows['start_frame'])
+        end_frame = int(rows['end_frame'])
         row = []
         column = []
         

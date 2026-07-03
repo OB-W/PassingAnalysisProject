@@ -8,4 +8,6 @@ numpy==1.26.4
 scikit-learn==1.5.0
 torch==2.3.1
 pandas==2.2.2
-torch-geometric=2.7.0
+torch-geometric==2.7.0
+sshtunnel
+sqlalchemy

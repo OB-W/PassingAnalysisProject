@@ -6,7 +6,8 @@ sys.path.append(os.path.abspath("."))
 from main import process_video
 from utils.file_path_config.file_paths import passes_csv
 
-from FootballPassingAnalysisProject2.database.database_main import save_to_database
+from database.database_main import save_to_database
+
 
 import pandas as pd
 from numpy.random import default_rng as rng

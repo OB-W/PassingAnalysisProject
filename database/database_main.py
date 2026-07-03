@@ -26,7 +26,6 @@ def get_server():
     engine = create_engine(f'postgresql://{db_username}:{db_password}@127.0.0.1:{server.local_bind.port}/{db_name}')
     return server, engine
 
-
 def save_to_database():
     df = pd.read_csv('output/data.csv')
     timestamp = time.strftime("%Y%m%d_%H%M%S")
