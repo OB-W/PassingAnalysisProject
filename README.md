@@ -10,15 +10,26 @@
   <h3 align="center">MatchVision</h3>
 
   <p align="center">
-    Automated football match Passing analysis using Computer Vision and Machine Learning. 
-    Still a work in progress documentation is not yet up to date.
-    To run, please follow usage and just used the frontend only and enter your ssh keys to the database database/database_main.py
-    <br />
+
+    This project is based on JanSkn's 'football-computer-vision':
+    
+    https://github.com/janskn/football-computer-vision
+
+    With adaptations, the Janskn's repository provides the core computer vision, documentation and user interface.
+  
+    
+    Automated football match passing analysis tool using Computer Vision and Machine Learning. 
+    
+    This is still a work in progress, and the documentation is not yet fully up to date.
+    
+    To run, please follow Usage and use the frontend only and enter your database credentials in 'database/database_main.py'.
+    
+<br />
     <a href="https://github.com/janskn/football-computer-vision/issues"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://github.com/janskn/football-computer-vision/issues">Report Bug</a>
-    ·
+
     <a href="https://github.com/janskn/football-computer-vision/issues">Request Feature</a>
   </p>
 
@@ -32,6 +43,8 @@
 ## About The Project
 
 The project called *MatchVision* allows tracking the ball, referees and players, treating players individually by ID and assigning them to a team, displaying ball possession and estimating the camera movement. 
+
+This project also analyse passing in in football matches. Users can upload their own match footage and receive feedback annotated onto the video with pass grades directly overlaid onto the match.
 
 <br />
 
